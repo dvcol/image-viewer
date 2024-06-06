@@ -1,0 +1,25 @@
+name: Build
+description: Install and build the repo
+
+inputs:
+  script:
+    description: Build script
+    default: 'build'
+
+  base-url:
+    description: Base URL for serving on github pages
+    default: 'image-viewer'
+
+runs:
+  using: composite
+  steps:
+    - name: 🧱 Install
+      uses: ./.github/actions/install
+
+    - name: 🚧 Build sources
+      shell: bash
+      env:
+        BASE_URL: ${{ inputs.base-url }}
+      run: |
+        # =================  🚧 Build  =================
+        pnpm run ${{ inputs.script }}
